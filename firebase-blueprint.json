@@ -1,0 +1,67 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile authenticated with Google",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Google Firebase User UID" },
+        "email": { "type": "string", "format": "email", "description": "User Google email address (Gmail)" },
+        "displayName": { "type": "string", "description": "Full display name" },
+        "photoURL": { "type": "string", "description": "Profile avatar URL" },
+        "lastLoginAt": { "type": "string", "description": "Timestamp of latest login" }
+      },
+      "required": ["id", "email"]
+    },
+    "ChatSession": {
+      "title": "ChatSession",
+      "description": "Conversation history with multi-model assistant synced to Firebase for all users",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique session ID" },
+        "userId": { "type": "string", "description": "Owner Google UID" },
+        "userEmail": { "type": "string", "description": "Owner Google Gmail address" },
+        "userDisplayName": { "type": "string", "description": "Owner display name" },
+        "title": { "type": "string", "description": "Session conversation title" },
+        "model": { "type": "string", "description": "AI Model used for session" },
+        "messages": { "type": "array", "description": "List of message objects" },
+        "createdAt": { "type": "number", "description": "Created epoch milliseconds" },
+        "updatedAt": { "type": "number", "description": "Updated epoch milliseconds" },
+        "syncedAt": { "type": "string", "description": "Server sync timestamp" }
+      },
+      "required": ["id", "userId", "title"]
+    },
+    "ApiKey": {
+      "title": "ApiKey",
+      "description": "Developer API Key with user Gmail stored in Firebase",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Key ID" },
+        "userId": { "type": "string", "description": "Owner Google UID" },
+        "userEmail": { "type": "string", "description": "Owner Gmail address" },
+        "userDisplayName": { "type": "string", "description": "Owner display name" },
+        "name": { "type": "string", "description": "Label for the API key" },
+        "key": { "type": "string", "description": "Hashed or secret key token" },
+        "maskedKey": { "type": "string", "description": "Masked display version of key" },
+        "createdAt": { "type": "number", "description": "Creation timestamp" },
+        "createdAtIso": { "type": "string", "description": "ISO timestamp of creation" },
+        "status": { "type": "string", "description": "active | revoked" }
+      },
+      "required": ["id", "userId", "userEmail", "name", "key"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Authenticated user profiles"
+    },
+    "/chat_sessions/{sessionId}": {
+      "schema": "ChatSession",
+      "description": "User chat histories and persistent conversations for all users"
+    },
+    "/api_keys/{keyId}": {
+      "schema": "ApiKey",
+      "description": "Developer API keys stored with Gmail on Firebase"
+    }
+  }
+}

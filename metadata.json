@@ -1,0 +1,6 @@
+{
+  "name": "Puter AI Chatbot",
+  "description": "Production-ready Puter.js AI Chatbot workspace with multi-model streaming, markdown syntax highlighting, session persistence, and custom settings.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
